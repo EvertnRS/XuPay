@@ -1,6 +1,6 @@
 import net from 'net';
 import { ResponseParser } from './infra/parser/ResponseParser';
-import { Error } from './infra/middleware/Error';
+import { ErrorHandler } from './infra/middleware/Error';
 import { Routes } from './routes/Routes';
 
 const server = net.createServer((socket: net.Socket) => {
@@ -12,7 +12,7 @@ const server = net.createServer((socket: net.Socket) => {
         const request = ResponseParser.deserialize(data.toString(), socket);
 
         if (!request) {
-            return Error.handle('Corpo da requisição com campos diferentes do esperado ' + request, socket);
+            return ErrorHandler.handle('Requisição com formato inválido ' + request, socket);
         }
 
         const routes = new Routes();

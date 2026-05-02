@@ -2,7 +2,7 @@ import { Socket } from "net";
 import type { Request }  from "../@types/contracts/Request";
 import { MessageController } from "../modules/message/controller/MessageController";
 import { MessageRepositoryImpl } from "@/modules/message/domain/repository/MessageRepositoryimpl";
-import { Error } from "../infra/middleware/Error";
+import { ErrorHandler } from "../infra/middleware/Error";
 
 export class Routes {
     private messageRepository =  new MessageRepositoryImpl();
@@ -17,7 +17,7 @@ export class Routes {
             this.messageController.retry(request, socket);
         }
         else {
-            Error.handle("Rota não encontrada", socket);       
+            ErrorHandler.handle("Rota não encontrada", socket);       
         }
     }
 }

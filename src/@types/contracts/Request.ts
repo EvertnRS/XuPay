@@ -1,6 +1,6 @@
 import { MessageBody } from "./MessageBody";
 import { Socket } from "net";
-import { Error } from "../infra/middleware/Error";
+import { ErrorHandler } from "../../infra/middleware/Error";
 
 export type Request = {
   method: string;
@@ -25,18 +25,18 @@ export function isValidBodyRequest(
   socket: Socket
 ): MessageBody | void {
   if (!Object.values(Source).includes(messageBody.source as Source)) {
-    return Error.handle("Origem inválida: " + messageBody.source, socket);
+    return  ErrorHandler.handle("Origem inválida: " + messageBody.source, socket);
   }
 
   if (!Object.values(Type).includes(messageBody.type as Type)) {
-    return Error.handle("Tipo inválido: " + messageBody.type, socket);
+    return ErrorHandler.handle("Tipo inválido: " + messageBody.type, socket);
   }
 
   if (
     messageBody.timestamp &&
     !isValidIsoTimestampWithMilliseconds(messageBody.timestamp)
   ) {
-    return Error.handle("Timestamp inválido: " + messageBody.timestamp, socket);
+    return ErrorHandler.handle("Timestamp inválido: " + messageBody.timestamp, socket);
   }
 
   return messageBody;

@@ -4,7 +4,7 @@ import { MessageRepositoryImpl } from "../domain/repository/MessageRepositoryimp
 import { QueueMessageRepositoryImpl } from "../../queue/domain/repository/QueueMessageRepositoryImpl";
 import crypto from "crypto";
 import { queueEventBus } from "../../../infra/event/QueueEventBus";
-import { Error } from "@/infra/middleware/Error";
+import { ErrorHandler } from "@/infra/middleware/Error";
 
 export class MessageService {
     constructor(
@@ -15,7 +15,7 @@ export class MessageService {
     public async publish(message:MessageBody, socket: Socket): Promise<void> {
         const existingMessage = await this.messageRepository.findByTimestamp(new Date(message.timestamp));
         if (existingMessage) {
-            return Error.handle("Mensagem já existe", socket);
+            return ErrorHandler.handle("Mensagem já existe", socket);
         }
 
         const payloadHash = await this.generatePayloadHash(message.payload);

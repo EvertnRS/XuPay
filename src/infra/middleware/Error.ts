@@ -1,6 +1,6 @@
 import { Socket } from "net";
 
-export class Error {
+export class ErrorHandler {
     
     public static handle(err: String, socket:Socket): void {
         socket.write(`Error: ${err}`);
