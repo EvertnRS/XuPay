@@ -1,5 +1,5 @@
-import type { Response }  from "../../@types/Response";
-import type { Request }  from "../../@types/Request";
+import type { Response }  from "../../@types/contracts/Response";
+import type { Request }  from "../../@types/contracts/Request";
 import { Socket } from "net";
 import { Error } from "../middleware/Error";
 

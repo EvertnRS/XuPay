@@ -1,9 +1,13 @@
 import { Socket } from "net";
-import { Request, isValidBodyRequest} from "@/@types/Request";
+import { Request, isValidBodyRequest} from "@/@types/contracts/Request";
 import { MessageService } from "../service/MessageService";
+import { IMessageRepository } from "../domain/repository/IMessageRepository";
 
 export class MessageController{
-    private messageService: MessageService  = new MessageService();
+    constructor(
+        private messageRepository: IMessageRepository,
+        private messageService: MessageService  = new MessageService(this.messageRepository)
+    ) {}
 
     public publish(request: Request, socket: Socket): void {
         const messageBody = isValidBodyRequest(request.body, socket);

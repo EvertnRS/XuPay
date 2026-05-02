@@ -1,17 +1,24 @@
-import { MessageBody } from "@/@types/MessageBody";
+import { MessageBody } from "@/@types/contracts/MessageBody";
 import { Socket } from "net";
 import { MessageRepositoryImpl } from "../domain/repository/MessageRepositoryimpl";
 import { QueueMessageRepositoryImpl } from "../../queue/domain/repository/QueueMessageRepositoryImpl";
 import crypto from "crypto";
 import { queueEventBus } from "../../../infra/event/QueueEventBus";
+import { Error } from "@/infra/middleware/Error";
 
 export class MessageService {
-    private messageRepository: MessageRepositoryImpl = new MessageRepositoryImpl(); 
-    private queueMessageRepository: QueueMessageRepositoryImpl = new QueueMessageRepositoryImpl();    
+    constructor(
+        private messageRepository: MessageRepositoryImpl,
+        private queueMessageRepository: QueueMessageRepositoryImpl = new QueueMessageRepositoryImpl()
+    ) {}    
 
     public async publish(message:MessageBody, socket: Socket): Promise<void> {
-        console.log("Publicando mensagem:", message.payload);
-         const payloadHash = await this.generatePayloadHash(message.payload);
+        const existingMessage = await this.messageRepository.findByTimestamp(new Date(message.timestamp));
+        if (existingMessage) {
+            return Error.handle("Mensagem já existe", socket);
+        }
+
+        const payloadHash = await this.generatePayloadHash(message.payload);
          
          const savedMessage = await this.messageRepository.saveMessage({
             source: message.source,

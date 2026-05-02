@@ -13,4 +13,18 @@ export class MessageRepositoryImpl implements IMessageRepository {
             }
         });
     }
+
+    public async findById(id: string): Promise<Message | null> {
+        return await prismaClient.message.findUnique({
+            where: { id }
+        });
+    }
+
+    public async findByTimestamp(timestamp: Date): Promise<Message | null> {
+        return await prismaClient.message.findUnique({
+            where: {
+                timestamp: timestamp
+            }
+        });
+    }
 }
