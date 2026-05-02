@@ -1,16 +1,20 @@
 import { MessageBody } from "@/@types/contracts/MessageBody";
 import { Socket } from "net";
 import { MessageRepositoryImpl } from "../domain/repository/MessageRepositoryimpl";
-import { QueueMessageRepositoryImpl } from "../../queue/domain/repository/QueueMessageRepositoryImpl";
-import crypto from "crypto";
 import { queueEventBus } from "../../../infra/event/QueueEventBus";
 import { ErrorHandler } from "@/infra/middleware/Error";
+import { QueueMessageService } from "@/modules/queue/service/QueueMessageService";
+import { MessageWorker } from "@/modules/worker/MessageWorker";
+import crypto from "crypto";
 
 export class MessageService {
     constructor(
         private messageRepository: MessageRepositoryImpl,
-        private queueMessageRepository: QueueMessageRepositoryImpl = new QueueMessageRepositoryImpl()
-    ) {}    
+        private queueMessageService: QueueMessageService,
+        private messageWorker = new MessageWorker(this.queueMessageService)
+    ) {
+        this.messageWorker.register();
+    }    
 
     public async publish(message:MessageBody, socket: Socket): Promise<void> {
         const existingMessage = await this.messageRepository.findByTimestamp(new Date(message.timestamp));
@@ -27,22 +31,9 @@ export class MessageService {
             timestamp: new Date(message.timestamp)
         });
 
-        //TODO: Refatorar para a camada de serviço de fila, não acoplar diretamente o repositório aqui
-        await this.queueMessageRepository.saveMessage({
-            messageId: savedMessage.id,
-            retryCount: 0
-        });
-
-        queueEventBus.emit('NEW_MESSAGE');
+        queueEventBus.emit('MESSAGE_CREATED', savedMessage.id);
         
         socket.write(`Mensagem publicada: ${message.type} - ${message.payload} - ${message.timestamp}`);
-        socket.end();
-    }
-
-    public retry(message: MessageBody, socket: Socket): void {
-        
-
-        socket.write(`Mensagem republicada: ${message.type} - ${message.payload} - ${message.timestamp}`);
         socket.end();
     }
 
