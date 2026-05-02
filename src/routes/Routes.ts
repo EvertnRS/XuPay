@@ -8,10 +8,10 @@ export class Routes {
 
 	public handle(request:Request, socket:Socket):void  {
         
-        if (request.method === 'POST' && request.path === '/publish'){
+        if (request.method == 'POST' && request.path == 'publish'){
             this.messageController.publish(request, socket);
         }
-        else if (request.method === 'POST' && request.path === '/retry'){
+        else if (request.method == 'POST' && request.path == 'retry'){
             this.messageController.retry(request, socket);
         }
         else {

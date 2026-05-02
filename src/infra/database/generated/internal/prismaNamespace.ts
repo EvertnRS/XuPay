@@ -597,7 +597,6 @@ export const MessageScalarFieldEnum = {
   source: 'source',
   type: 'type',
   payload: 'payload',
-  status: 'status',
   timestamp: 'timestamp'
 } as const
 
@@ -607,8 +606,8 @@ export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeo
 export const QueueMessageScalarFieldEnum = {
   id: 'id',
   messageId: 'messageId',
-  retryCount: 'retryCount',
-  maxRetries: 'maxRetries'
+  status: 'status',
+  retryCount: 'retryCount'
 } as const
 
 export type QueueMessageScalarFieldEnum = (typeof QueueMessageScalarFieldEnum)[keyof typeof QueueMessageScalarFieldEnum]
@@ -661,6 +660,20 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'QueueStatus'
+ */
+export type EnumQueueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueueStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'QueueStatus[]'
+ */
+export type ListEnumQueueStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueueStatus[]'>
     
 
 

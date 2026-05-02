@@ -1,18 +1,21 @@
 import net from 'net';
 import { ResponseParser } from './infra/parser/ResponseParser';
+import { Error } from './infra/middleware/Error';
 import { Routes } from './routes/Routes';
 
 const server = net.createServer((socket: net.Socket) => {
     console.log('Cliente conectado');
 
-    const routes = new Routes();
-
-
     socket.on('data', (data: Buffer) => {
         console.log('Recebido');
-        console.log(data.toString());
         
         const request = ResponseParser.deserialize(data.toString(), socket);
+
+        if (!request) {
+            return Error.handle('Corpo da requisição com campos diferentes do esperado ' + request, socket);
+        }
+
+        const routes = new Routes();
         routes.handle(request, socket);
 
     });

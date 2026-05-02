@@ -4,22 +4,23 @@ import { Socket } from "net";
 import { Error } from "../middleware/Error";
 
 export class ResponseParser {
-    public static deserialize(request: string, socket:Socket): Request {
+    public static deserialize(request: string, socket:Socket): Request | void {
         const parts = request.split('|');
-        const bodyParts = parts[0].split(' ');
+        const bodyParts = parts[2].split(';');
         try {
-            if (parts.length < 3) {
-                Error.handle('Formato inválido de requisição '+ request, socket);
+            if (parts.length != 3) {
+                return Error.handle('Requisição com campos diferentes do esperado '+ request, socket);
             }
 
-            if (bodyParts.length < 4) {
-                Error.handle('Formato inválido de corpo ' + request, socket);
+            if (bodyParts.length != 4) {
+                console.log(bodyParts);
+                return Error.handle('Corpo da requisição com campos diferentes do esperado ' + request, socket);
             }
             
         } catch (error: any) {
-            Error.handle('Formato inválido de corpo ' + request, socket);
+            Error.handle(`Formato inválido de corpo `  + request, socket);
         }
-
+        
         const [method, path] = parts;
         const [source, type, payload, timestamp] = bodyParts;
 

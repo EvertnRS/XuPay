@@ -28,66 +28,62 @@ export type AggregateQueueMessage = {
 
 export type QueueMessageAvgAggregateOutputType = {
   retryCount: number | null
-  maxRetries: number | null
 }
 
 export type QueueMessageSumAggregateOutputType = {
   retryCount: number | null
-  maxRetries: number | null
 }
 
 export type QueueMessageMinAggregateOutputType = {
   id: string | null
   messageId: string | null
+  status: $Enums.QueueStatus | null
   retryCount: number | null
-  maxRetries: number | null
 }
 
 export type QueueMessageMaxAggregateOutputType = {
   id: string | null
   messageId: string | null
+  status: $Enums.QueueStatus | null
   retryCount: number | null
-  maxRetries: number | null
 }
 
 export type QueueMessageCountAggregateOutputType = {
   id: number
   messageId: number
+  status: number
   retryCount: number
-  maxRetries: number
   _all: number
 }
 
 
 export type QueueMessageAvgAggregateInputType = {
   retryCount?: true
-  maxRetries?: true
 }
 
 export type QueueMessageSumAggregateInputType = {
   retryCount?: true
-  maxRetries?: true
 }
 
 export type QueueMessageMinAggregateInputType = {
   id?: true
   messageId?: true
+  status?: true
   retryCount?: true
-  maxRetries?: true
 }
 
 export type QueueMessageMaxAggregateInputType = {
   id?: true
   messageId?: true
+  status?: true
   retryCount?: true
-  maxRetries?: true
 }
 
 export type QueueMessageCountAggregateInputType = {
   id?: true
   messageId?: true
+  status?: true
   retryCount?: true
-  maxRetries?: true
   _all?: true
 }
 
@@ -180,8 +176,8 @@ export type QueueMessageGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type QueueMessageGroupByOutputType = {
   id: string
   messageId: string
+  status: $Enums.QueueStatus
   retryCount: number
-  maxRetries: number
   _count: QueueMessageCountAggregateOutputType | null
   _avg: QueueMessageAvgAggregateOutputType | null
   _sum: QueueMessageSumAggregateOutputType | null
@@ -210,16 +206,16 @@ export type QueueMessageWhereInput = {
   NOT?: Prisma.QueueMessageWhereInput | Prisma.QueueMessageWhereInput[]
   id?: Prisma.StringFilter<"QueueMessage"> | string
   messageId?: Prisma.StringFilter<"QueueMessage"> | string
+  status?: Prisma.EnumQueueStatusFilter<"QueueMessage"> | $Enums.QueueStatus
   retryCount?: Prisma.IntFilter<"QueueMessage"> | number
-  maxRetries?: Prisma.IntFilter<"QueueMessage"> | number
   message?: Prisma.XOR<Prisma.MessageScalarRelationFilter, Prisma.MessageWhereInput>
 }
 
 export type QueueMessageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
   message?: Prisma.MessageOrderByWithRelationInput
 }
 
@@ -229,16 +225,16 @@ export type QueueMessageWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.QueueMessageWhereInput[]
   NOT?: Prisma.QueueMessageWhereInput | Prisma.QueueMessageWhereInput[]
   messageId?: Prisma.StringFilter<"QueueMessage"> | string
+  status?: Prisma.EnumQueueStatusFilter<"QueueMessage"> | $Enums.QueueStatus
   retryCount?: Prisma.IntFilter<"QueueMessage"> | number
-  maxRetries?: Prisma.IntFilter<"QueueMessage"> | number
   message?: Prisma.XOR<Prisma.MessageScalarRelationFilter, Prisma.MessageWhereInput>
 }, "id">
 
 export type QueueMessageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
   _count?: Prisma.QueueMessageCountOrderByAggregateInput
   _avg?: Prisma.QueueMessageAvgOrderByAggregateInput
   _max?: Prisma.QueueMessageMaxOrderByAggregateInput
@@ -252,56 +248,56 @@ export type QueueMessageScalarWhereWithAggregatesInput = {
   NOT?: Prisma.QueueMessageScalarWhereWithAggregatesInput | Prisma.QueueMessageScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"QueueMessage"> | string
   messageId?: Prisma.StringWithAggregatesFilter<"QueueMessage"> | string
+  status?: Prisma.EnumQueueStatusWithAggregatesFilter<"QueueMessage"> | $Enums.QueueStatus
   retryCount?: Prisma.IntWithAggregatesFilter<"QueueMessage"> | number
-  maxRetries?: Prisma.IntWithAggregatesFilter<"QueueMessage"> | number
 }
 
 export type QueueMessageCreateInput = {
   id?: string
+  status?: $Enums.QueueStatus
   retryCount: number
-  maxRetries?: number
   message: Prisma.MessageCreateNestedOneWithoutQueueMessagesInput
 }
 
 export type QueueMessageUncheckedCreateInput = {
   id?: string
   messageId: string
+  status?: $Enums.QueueStatus
   retryCount: number
-  maxRetries?: number
 }
 
 export type QueueMessageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
   message?: Prisma.MessageUpdateOneRequiredWithoutQueueMessagesNestedInput
 }
 
 export type QueueMessageUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type QueueMessageCreateManyInput = {
   id?: string
   messageId: string
+  status?: $Enums.QueueStatus
   retryCount: number
-  maxRetries?: number
 }
 
 export type QueueMessageUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type QueueMessageUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   messageId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type QueueMessageListRelationFilter = {
@@ -317,32 +313,30 @@ export type QueueMessageOrderByRelationAggregateInput = {
 export type QueueMessageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
 }
 
 export type QueueMessageAvgOrderByAggregateInput = {
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
 }
 
 export type QueueMessageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
 }
 
 export type QueueMessageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   messageId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
 }
 
 export type QueueMessageSumOrderByAggregateInput = {
   retryCount?: Prisma.SortOrder
-  maxRetries?: Prisma.SortOrder
 }
 
 export type QueueMessageCreateNestedManyWithoutMessageInput = {
@@ -387,6 +381,10 @@ export type QueueMessageUncheckedUpdateManyWithoutMessageNestedInput = {
   deleteMany?: Prisma.QueueMessageScalarWhereInput | Prisma.QueueMessageScalarWhereInput[]
 }
 
+export type EnumQueueStatusFieldUpdateOperationsInput = {
+  set?: $Enums.QueueStatus
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -397,14 +395,14 @@ export type IntFieldUpdateOperationsInput = {
 
 export type QueueMessageCreateWithoutMessageInput = {
   id?: string
+  status?: $Enums.QueueStatus
   retryCount: number
-  maxRetries?: number
 }
 
 export type QueueMessageUncheckedCreateWithoutMessageInput = {
   id?: string
+  status?: $Enums.QueueStatus
   retryCount: number
-  maxRetries?: number
 }
 
 export type QueueMessageCreateOrConnectWithoutMessageInput = {
@@ -439,32 +437,32 @@ export type QueueMessageScalarWhereInput = {
   NOT?: Prisma.QueueMessageScalarWhereInput | Prisma.QueueMessageScalarWhereInput[]
   id?: Prisma.StringFilter<"QueueMessage"> | string
   messageId?: Prisma.StringFilter<"QueueMessage"> | string
+  status?: Prisma.EnumQueueStatusFilter<"QueueMessage"> | $Enums.QueueStatus
   retryCount?: Prisma.IntFilter<"QueueMessage"> | number
-  maxRetries?: Prisma.IntFilter<"QueueMessage"> | number
 }
 
 export type QueueMessageCreateManyMessageInput = {
   id?: string
+  status?: $Enums.QueueStatus
   retryCount: number
-  maxRetries?: number
 }
 
 export type QueueMessageUpdateWithoutMessageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type QueueMessageUncheckedUpdateWithoutMessageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type QueueMessageUncheckedUpdateManyWithoutMessageInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumQueueStatusFieldUpdateOperationsInput | $Enums.QueueStatus
   retryCount?: Prisma.IntFieldUpdateOperationsInput | number
-  maxRetries?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -472,35 +470,35 @@ export type QueueMessageUncheckedUpdateManyWithoutMessageInput = {
 export type QueueMessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   messageId?: boolean
+  status?: boolean
   retryCount?: boolean
-  maxRetries?: boolean
   message?: boolean | Prisma.MessageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["queueMessage"]>
 
 export type QueueMessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   messageId?: boolean
+  status?: boolean
   retryCount?: boolean
-  maxRetries?: boolean
   message?: boolean | Prisma.MessageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["queueMessage"]>
 
 export type QueueMessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   messageId?: boolean
+  status?: boolean
   retryCount?: boolean
-  maxRetries?: boolean
   message?: boolean | Prisma.MessageDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["queueMessage"]>
 
 export type QueueMessageSelectScalar = {
   id?: boolean
   messageId?: boolean
+  status?: boolean
   retryCount?: boolean
-  maxRetries?: boolean
 }
 
-export type QueueMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "messageId" | "retryCount" | "maxRetries", ExtArgs["result"]["queueMessage"]>
+export type QueueMessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "messageId" | "status" | "retryCount", ExtArgs["result"]["queueMessage"]>
 export type QueueMessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   message?: boolean | Prisma.MessageDefaultArgs<ExtArgs>
 }
@@ -519,8 +517,8 @@ export type $QueueMessagePayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     messageId: string
+    status: $Enums.QueueStatus
     retryCount: number
-    maxRetries: number
   }, ExtArgs["result"]["queueMessage"]>
   composites: {}
 }
@@ -947,8 +945,8 @@ export interface Prisma__QueueMessageClient<T, Null = never, ExtArgs extends run
 export interface QueueMessageFieldRefs {
   readonly id: Prisma.FieldRef<"QueueMessage", 'String'>
   readonly messageId: Prisma.FieldRef<"QueueMessage", 'String'>
+  readonly status: Prisma.FieldRef<"QueueMessage", 'QueueStatus'>
   readonly retryCount: Prisma.FieldRef<"QueueMessage", 'Int'>
-  readonly maxRetries: Prisma.FieldRef<"QueueMessage", 'Int'>
 }
     
 

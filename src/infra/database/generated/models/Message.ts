@@ -29,7 +29,6 @@ export type MessageMinAggregateOutputType = {
   source: string | null
   type: string | null
   payload: string | null
-  status: string | null
   timestamp: Date | null
 }
 
@@ -38,7 +37,6 @@ export type MessageMaxAggregateOutputType = {
   source: string | null
   type: string | null
   payload: string | null
-  status: string | null
   timestamp: Date | null
 }
 
@@ -47,7 +45,6 @@ export type MessageCountAggregateOutputType = {
   source: number
   type: number
   payload: number
-  status: number
   timestamp: number
   _all: number
 }
@@ -58,7 +55,6 @@ export type MessageMinAggregateInputType = {
   source?: true
   type?: true
   payload?: true
-  status?: true
   timestamp?: true
 }
 
@@ -67,7 +63,6 @@ export type MessageMaxAggregateInputType = {
   source?: true
   type?: true
   payload?: true
-  status?: true
   timestamp?: true
 }
 
@@ -76,7 +71,6 @@ export type MessageCountAggregateInputType = {
   source?: true
   type?: true
   payload?: true
-  status?: true
   timestamp?: true
   _all?: true
 }
@@ -158,7 +152,6 @@ export type MessageGroupByOutputType = {
   source: string
   type: string
   payload: string
-  status: string
   timestamp: Date
   _count: MessageCountAggregateOutputType | null
   _min: MessageMinAggregateOutputType | null
@@ -188,7 +181,6 @@ export type MessageWhereInput = {
   source?: Prisma.StringFilter<"Message"> | string
   type?: Prisma.StringFilter<"Message"> | string
   payload?: Prisma.StringFilter<"Message"> | string
-  status?: Prisma.StringFilter<"Message"> | string
   timestamp?: Prisma.DateTimeFilter<"Message"> | Date | string
   queueMessages?: Prisma.QueueMessageListRelationFilter
 }
@@ -198,7 +190,6 @@ export type MessageOrderByWithRelationInput = {
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
   payload?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   queueMessages?: Prisma.QueueMessageOrderByRelationAggregateInput
 }
@@ -212,7 +203,6 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   source?: Prisma.StringFilter<"Message"> | string
   type?: Prisma.StringFilter<"Message"> | string
   payload?: Prisma.StringFilter<"Message"> | string
-  status?: Prisma.StringFilter<"Message"> | string
   queueMessages?: Prisma.QueueMessageListRelationFilter
 }, "id" | "timestamp">
 
@@ -221,7 +211,6 @@ export type MessageOrderByWithAggregationInput = {
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
   payload?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   _count?: Prisma.MessageCountOrderByAggregateInput
   _max?: Prisma.MessageMaxOrderByAggregateInput
@@ -236,7 +225,6 @@ export type MessageScalarWhereWithAggregatesInput = {
   source?: Prisma.StringWithAggregatesFilter<"Message"> | string
   type?: Prisma.StringWithAggregatesFilter<"Message"> | string
   payload?: Prisma.StringWithAggregatesFilter<"Message"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Message"> | string
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
 }
 
@@ -245,7 +233,6 @@ export type MessageCreateInput = {
   source: string
   type: string
   payload: string
-  status?: string
   timestamp?: Date | string
   queueMessages?: Prisma.QueueMessageCreateNestedManyWithoutMessageInput
 }
@@ -255,7 +242,6 @@ export type MessageUncheckedCreateInput = {
   source: string
   type: string
   payload: string
-  status?: string
   timestamp?: Date | string
   queueMessages?: Prisma.QueueMessageUncheckedCreateNestedManyWithoutMessageInput
 }
@@ -265,7 +251,6 @@ export type MessageUpdateInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   queueMessages?: Prisma.QueueMessageUpdateManyWithoutMessageNestedInput
 }
@@ -275,7 +260,6 @@ export type MessageUncheckedUpdateInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   queueMessages?: Prisma.QueueMessageUncheckedUpdateManyWithoutMessageNestedInput
 }
@@ -285,7 +269,6 @@ export type MessageCreateManyInput = {
   source: string
   type: string
   payload: string
-  status?: string
   timestamp?: Date | string
 }
 
@@ -294,7 +277,6 @@ export type MessageUpdateManyMutationInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -303,7 +285,6 @@ export type MessageUncheckedUpdateManyInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -312,7 +293,6 @@ export type MessageCountOrderByAggregateInput = {
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
   payload?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -321,7 +301,6 @@ export type MessageMaxOrderByAggregateInput = {
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
   payload?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -330,7 +309,6 @@ export type MessageMinOrderByAggregateInput = {
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
   payload?: Prisma.SortOrder
-  status?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -366,7 +344,6 @@ export type MessageCreateWithoutQueueMessagesInput = {
   source: string
   type: string
   payload: string
-  status?: string
   timestamp?: Date | string
 }
 
@@ -375,7 +352,6 @@ export type MessageUncheckedCreateWithoutQueueMessagesInput = {
   source: string
   type: string
   payload: string
-  status?: string
   timestamp?: Date | string
 }
 
@@ -400,7 +376,6 @@ export type MessageUpdateWithoutQueueMessagesInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -409,7 +384,6 @@ export type MessageUncheckedUpdateWithoutQueueMessagesInput = {
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -449,7 +423,6 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   source?: boolean
   type?: boolean
   payload?: boolean
-  status?: boolean
   timestamp?: boolean
   queueMessages?: boolean | Prisma.Message$queueMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
@@ -460,7 +433,6 @@ export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   source?: boolean
   type?: boolean
   payload?: boolean
-  status?: boolean
   timestamp?: boolean
 }, ExtArgs["result"]["message"]>
 
@@ -469,7 +441,6 @@ export type MessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   source?: boolean
   type?: boolean
   payload?: boolean
-  status?: boolean
   timestamp?: boolean
 }, ExtArgs["result"]["message"]>
 
@@ -478,11 +449,10 @@ export type MessageSelectScalar = {
   source?: boolean
   type?: boolean
   payload?: boolean
-  status?: boolean
   timestamp?: boolean
 }
 
-export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "type" | "payload" | "status" | "timestamp", ExtArgs["result"]["message"]>
+export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "type" | "payload" | "timestamp", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   queueMessages?: boolean | Prisma.Message$queueMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
@@ -500,7 +470,6 @@ export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     source: string
     type: string
     payload: string
-    status: string
     timestamp: Date
   }, ExtArgs["result"]["message"]>
   composites: {}
@@ -930,7 +899,6 @@ export interface MessageFieldRefs {
   readonly source: Prisma.FieldRef<"Message", 'String'>
   readonly type: Prisma.FieldRef<"Message", 'String'>
   readonly payload: Prisma.FieldRef<"Message", 'String'>
-  readonly status: Prisma.FieldRef<"Message", 'String'>
   readonly timestamp: Prisma.FieldRef<"Message", 'DateTime'>
 }
     

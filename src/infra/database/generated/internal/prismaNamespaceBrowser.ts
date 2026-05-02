@@ -76,7 +76,6 @@ export const MessageScalarFieldEnum = {
   source: 'source',
   type: 'type',
   payload: 'payload',
-  status: 'status',
   timestamp: 'timestamp'
 } as const
 
@@ -86,8 +85,8 @@ export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeo
 export const QueueMessageScalarFieldEnum = {
   id: 'id',
   messageId: 'messageId',
-  retryCount: 'retryCount',
-  maxRetries: 'maxRetries'
+  status: 'status',
+  retryCount: 'retryCount'
 } as const
 
 export type QueueMessageScalarFieldEnum = (typeof QueueMessageScalarFieldEnum)[keyof typeof QueueMessageScalarFieldEnum]

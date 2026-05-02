@@ -9,29 +9,52 @@ export type Request = {
 };
 
 enum Source {
-  client = "client",
-  retry = "retry"
+  client = "CLIENT",
+  retry = "RETRY",
 }
 
 enum Type {
   CREATE_TRANSACTION = "CREATE_TRANSACTION",
   READ_TRANSACTION = "READ_TRANSACTION",
   UPDATE_TRANSACTION = "UPDATE_TRANSACTION",
-  DELETE_TRANSACTION = "DELETE_TRANSACTION"
+  DELETE_TRANSACTION = "DELETE_TRANSACTION",
 }
 
-export function isValidRequest(request: Request, socket:Socket): Request {
-  if (!Object.values(Source).includes(request.body.source as Source)) {
-      Error.handle("Origem inválida: " + request.body.source, socket);
+export function isValidBodyRequest(
+  messageBody: MessageBody,
+  socket: Socket
+): MessageBody | void {
+  if (!Object.values(Source).includes(messageBody.source as Source)) {
+    return Error.handle("Origem inválida: " + messageBody.source, socket);
   }
 
-  if (!Object.values(Type).includes(request.body.type as Type)) {
-    Error.handle("Tipo inválido: " + request.body.source, socket);
+  if (!Object.values(Type).includes(messageBody.type as Type)) {
+    return Error.handle("Tipo inválido: " + messageBody.type, socket);
   }
 
-  if (request.body.timestamp && isNaN(Date.parse(request.body.timestamp))) {
-    Error.handle("Timestamp inválido: " + request.body.source, socket);
+  if (
+    messageBody.timestamp &&
+    !isValidIsoTimestampWithMilliseconds(messageBody.timestamp)
+  ) {
+    return Error.handle("Timestamp inválido: " + messageBody.timestamp, socket);
   }
 
-  return request;
+  return messageBody;
+}
+
+function isValidIsoTimestampWithMilliseconds(timestamp: string): boolean {
+  const ISO_WITH_MILLISECONDS_REGEX =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
+  if (!ISO_WITH_MILLISECONDS_REGEX.test(timestamp)) {
+    return false;
+  }
+
+  const date = new Date(timestamp);
+
+  if (Number.isNaN(date.getTime())) {
+    return false;
+  }
+
+  return date.toISOString() === timestamp;
 }
