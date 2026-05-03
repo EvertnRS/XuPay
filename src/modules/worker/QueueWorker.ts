@@ -12,7 +12,11 @@ export class QueueWorker {
         private readonly queueMessageRepository : IQueueMessageRepository
     ) {
         const socketClient = new SocketClient();
-        this.serviceClient = new ServiceClient(socketClient, 'localhost', 4000);
+        this.serviceClient = new ServiceClient(
+            socketClient, 
+            process.env.SERVICE_HOST || ' ', 
+            parseInt(process.env.SERVICE_PORT || ' ')
+        );
 
     }
 
