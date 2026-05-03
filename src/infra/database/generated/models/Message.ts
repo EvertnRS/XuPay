@@ -28,24 +28,30 @@ export type MessageMinAggregateOutputType = {
   id: string | null
   source: string | null
   type: string | null
+  service: string | null
   payload: string | null
   timestamp: Date | null
+  idempotencyKey: string | null
 }
 
 export type MessageMaxAggregateOutputType = {
   id: string | null
   source: string | null
   type: string | null
+  service: string | null
   payload: string | null
   timestamp: Date | null
+  idempotencyKey: string | null
 }
 
 export type MessageCountAggregateOutputType = {
   id: number
   source: number
   type: number
+  service: number
   payload: number
   timestamp: number
+  idempotencyKey: number
   _all: number
 }
 
@@ -54,24 +60,30 @@ export type MessageMinAggregateInputType = {
   id?: true
   source?: true
   type?: true
+  service?: true
   payload?: true
   timestamp?: true
+  idempotencyKey?: true
 }
 
 export type MessageMaxAggregateInputType = {
   id?: true
   source?: true
   type?: true
+  service?: true
   payload?: true
   timestamp?: true
+  idempotencyKey?: true
 }
 
 export type MessageCountAggregateInputType = {
   id?: true
   source?: true
   type?: true
+  service?: true
   payload?: true
   timestamp?: true
+  idempotencyKey?: true
   _all?: true
 }
 
@@ -151,8 +163,10 @@ export type MessageGroupByOutputType = {
   id: string
   source: string
   type: string
+  service: string
   payload: string
   timestamp: Date
+  idempotencyKey: string
   _count: MessageCountAggregateOutputType | null
   _min: MessageMinAggregateOutputType | null
   _max: MessageMaxAggregateOutputType | null
@@ -180,8 +194,10 @@ export type MessageWhereInput = {
   id?: Prisma.StringFilter<"Message"> | string
   source?: Prisma.StringFilter<"Message"> | string
   type?: Prisma.StringFilter<"Message"> | string
+  service?: Prisma.StringFilter<"Message"> | string
   payload?: Prisma.StringFilter<"Message"> | string
   timestamp?: Prisma.DateTimeFilter<"Message"> | Date | string
+  idempotencyKey?: Prisma.StringFilter<"Message"> | string
   queueMessages?: Prisma.QueueMessageListRelationFilter
 }
 
@@ -189,29 +205,35 @@ export type MessageOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  service?: Prisma.SortOrder
   payload?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
   queueMessages?: Prisma.QueueMessageOrderByRelationAggregateInput
 }
 
 export type MessageWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  timestamp?: Date | string
+  idempotencyKey?: string
   AND?: Prisma.MessageWhereInput | Prisma.MessageWhereInput[]
   OR?: Prisma.MessageWhereInput[]
   NOT?: Prisma.MessageWhereInput | Prisma.MessageWhereInput[]
   source?: Prisma.StringFilter<"Message"> | string
   type?: Prisma.StringFilter<"Message"> | string
+  service?: Prisma.StringFilter<"Message"> | string
   payload?: Prisma.StringFilter<"Message"> | string
+  timestamp?: Prisma.DateTimeFilter<"Message"> | Date | string
   queueMessages?: Prisma.QueueMessageListRelationFilter
-}, "id" | "timestamp">
+}, "id" | "idempotencyKey">
 
 export type MessageOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  service?: Prisma.SortOrder
   payload?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
   _count?: Prisma.MessageCountOrderByAggregateInput
   _max?: Prisma.MessageMaxOrderByAggregateInput
   _min?: Prisma.MessageMinOrderByAggregateInput
@@ -224,16 +246,20 @@ export type MessageScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Message"> | string
   source?: Prisma.StringWithAggregatesFilter<"Message"> | string
   type?: Prisma.StringWithAggregatesFilter<"Message"> | string
+  service?: Prisma.StringWithAggregatesFilter<"Message"> | string
   payload?: Prisma.StringWithAggregatesFilter<"Message"> | string
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
+  idempotencyKey?: Prisma.StringWithAggregatesFilter<"Message"> | string
 }
 
 export type MessageCreateInput = {
   id?: string
   source: string
   type: string
+  service: string
   payload: string
   timestamp?: Date | string
+  idempotencyKey: string
   queueMessages?: Prisma.QueueMessageCreateNestedManyWithoutMessageInput
 }
 
@@ -241,8 +267,10 @@ export type MessageUncheckedCreateInput = {
   id?: string
   source: string
   type: string
+  service: string
   payload: string
   timestamp?: Date | string
+  idempotencyKey: string
   queueMessages?: Prisma.QueueMessageUncheckedCreateNestedManyWithoutMessageInput
 }
 
@@ -250,8 +278,10 @@ export type MessageUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  service?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   queueMessages?: Prisma.QueueMessageUpdateManyWithoutMessageNestedInput
 }
 
@@ -259,8 +289,10 @@ export type MessageUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  service?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   queueMessages?: Prisma.QueueMessageUncheckedUpdateManyWithoutMessageNestedInput
 }
 
@@ -268,48 +300,60 @@ export type MessageCreateManyInput = {
   id?: string
   source: string
   type: string
+  service: string
   payload: string
   timestamp?: Date | string
+  idempotencyKey: string
 }
 
 export type MessageUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  service?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MessageUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  service?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MessageCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  service?: Prisma.SortOrder
   payload?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
 }
 
 export type MessageMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  service?: Prisma.SortOrder
   payload?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
 }
 
 export type MessageMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   source?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  service?: Prisma.SortOrder
   payload?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
 }
 
 export type MessageScalarRelationFilter = {
@@ -343,16 +387,20 @@ export type MessageCreateWithoutQueueMessagesInput = {
   id?: string
   source: string
   type: string
+  service: string
   payload: string
   timestamp?: Date | string
+  idempotencyKey: string
 }
 
 export type MessageUncheckedCreateWithoutQueueMessagesInput = {
   id?: string
   source: string
   type: string
+  service: string
   payload: string
   timestamp?: Date | string
+  idempotencyKey: string
 }
 
 export type MessageCreateOrConnectWithoutQueueMessagesInput = {
@@ -375,16 +423,20 @@ export type MessageUpdateWithoutQueueMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  service?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type MessageUncheckedUpdateWithoutQueueMessagesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  service?: Prisma.StringFieldUpdateOperationsInput | string
   payload?: Prisma.StringFieldUpdateOperationsInput | string
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -422,8 +474,10 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   source?: boolean
   type?: boolean
+  service?: boolean
   payload?: boolean
   timestamp?: boolean
+  idempotencyKey?: boolean
   queueMessages?: boolean | Prisma.Message$queueMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["message"]>
@@ -432,27 +486,33 @@ export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   source?: boolean
   type?: boolean
+  service?: boolean
   payload?: boolean
   timestamp?: boolean
+  idempotencyKey?: boolean
 }, ExtArgs["result"]["message"]>
 
 export type MessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   source?: boolean
   type?: boolean
+  service?: boolean
   payload?: boolean
   timestamp?: boolean
+  idempotencyKey?: boolean
 }, ExtArgs["result"]["message"]>
 
 export type MessageSelectScalar = {
   id?: boolean
   source?: boolean
   type?: boolean
+  service?: boolean
   payload?: boolean
   timestamp?: boolean
+  idempotencyKey?: boolean
 }
 
-export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "type" | "payload" | "timestamp", ExtArgs["result"]["message"]>
+export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "source" | "type" | "service" | "payload" | "timestamp" | "idempotencyKey", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   queueMessages?: boolean | Prisma.Message$queueMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.MessageCountOutputTypeDefaultArgs<ExtArgs>
@@ -469,8 +529,10 @@ export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     source: string
     type: string
+    service: string
     payload: string
     timestamp: Date
+    idempotencyKey: string
   }, ExtArgs["result"]["message"]>
   composites: {}
 }
@@ -898,8 +960,10 @@ export interface MessageFieldRefs {
   readonly id: Prisma.FieldRef<"Message", 'String'>
   readonly source: Prisma.FieldRef<"Message", 'String'>
   readonly type: Prisma.FieldRef<"Message", 'String'>
+  readonly service: Prisma.FieldRef<"Message", 'String'>
   readonly payload: Prisma.FieldRef<"Message", 'String'>
   readonly timestamp: Prisma.FieldRef<"Message", 'DateTime'>
+  readonly idempotencyKey: Prisma.FieldRef<"Message", 'String'>
 }
     
 

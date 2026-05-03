@@ -1,5 +1,10 @@
 export type Response = {
-  id: string;
-  type: string;
-  payload: string;
+  method: string;
+    path: string;
+    body: {
+      source: string;
+      type: string;
+      payload: string;
+      timestamp: string;
+    };
 };

@@ -11,19 +11,24 @@ import { QueueMessageController } from "@/modules/queue/controller/QueueMessageC
 
 
 export class Routes {
+    private readonly messageRepository: MessageRepositoryImpl;
+    private readonly queueMessageRepository: QueueMessageRepositoryImpl;
+    private readonly queueMessageService: QueueMessageService;
+    private readonly messageService: MessageService;
+    private readonly queueWorker: QueueWorker;
+    private readonly messageController: MessageController;
+    private readonly queueMessageController: QueueMessageController;
+
     constructor(
-        private readonly messageRepository =  new MessageRepositoryImpl(),
-        private readonly queueMessageRepository = new QueueMessageRepositoryImpl(),
-        
-        private readonly queueMessageService = new QueueMessageService(this.queueMessageRepository),
-        private readonly messageService = new MessageService(this.messageRepository, this.queueMessageService),
-
-        private readonly queueWorker = new QueueWorker(this.queueMessageService, this.queueMessageRepository),
-        
-        private readonly messageController = new MessageController(this.messageService),
-        private readonly queueMessageController = new QueueMessageController(this.queueMessageService)
-
     ) {
+        this.messageRepository = new MessageRepositoryImpl();
+        this.queueMessageRepository = new QueueMessageRepositoryImpl();
+        this.queueMessageService = new QueueMessageService(this.queueMessageRepository);
+        this.messageService = new MessageService(this.messageRepository, this.queueMessageService);
+        this.queueWorker = new QueueWorker(this.queueMessageService, this.queueMessageRepository);
+        this.messageController = new MessageController(this.messageService);
+        this.queueMessageController = new QueueMessageController(this.queueMessageService);
+
         this.queueWorker.start();
     }
 

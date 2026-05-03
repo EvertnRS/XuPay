@@ -3,13 +3,12 @@ import { QueueMessage } from "../entity/QueueMessage";
 import { IQueueMessageRepository } from "./IQueueMessageRepository";
 
 export class QueueMessageRepositoryImpl implements IQueueMessageRepository {
-    public async saveMessage(queueMessage: Omit<QueueMessage, 'id' | 'status'>): Promise<void> {
+    public async saveMessage(queueMessage: Omit<QueueMessage, 'id' | 'status' | 'retryCount'>): Promise<void> {
         console.log("Salvando mensagem na fila:", queueMessage);
 
         await prismaClient.queueMessage.create({
             data: {
                 messageId: queueMessage.messageId,
-                retryCount: queueMessage.retryCount,
             }
         });
     }
@@ -30,6 +29,45 @@ export class QueueMessageRepositoryImpl implements IQueueMessageRepository {
             retryCount: result.retryCount,
             status: result.status
         };
+    }
+
+    public async findMessagePayloadById(id: string): Promise<{
+    message: {
+        service: string;
+        payload: string;
+    };
+    } | null> {
+        const result = await prismaClient.queueMessage.findUnique({
+            where: { id },
+            include: { message: true }
+        });
+
+        if (!result) {
+            return null;
+        }
+
+        return {
+            message: {
+                service: result.message.service,
+                payload: result.message.payload
+            }
+        };
+    }
+
+    findById(id: string): Promise<QueueMessage | null> {
+        return prismaClient.queueMessage.findUnique({
+            where: { id },
+        }).then(result => {
+            if (!result) {
+                return null;
+            }
+            return {
+                id: result.id,
+                messageId: result.messageId,
+                retryCount: result.retryCount,
+                status: result.status
+            };
+        });
     }
 
     public async updateMessage(queueMessage: QueueMessage): Promise<void> {

@@ -9,15 +9,13 @@ export type Request = {
 };
 
 enum Source {
-  client = "CLIENT",
-  retry = "RETRY",
+  GATEWAY = "GATEWAY",
+  SERVICE_CLIENT = "SERVICE_CLIENT"
 }
 
 enum Type {
-  CREATE_TRANSACTION = "CREATE_TRANSACTION",
-  READ_TRANSACTION = "READ_TRANSACTION",
-  UPDATE_TRANSACTION = "UPDATE_TRANSACTION",
-  DELETE_TRANSACTION = "DELETE_TRANSACTION",
+  REQUEST = "REQUEST",
+  RESPONSE = "RESPONSE"
 }
 
 export function isValidBodyRequest(

@@ -8,8 +8,10 @@ export class MessageRepositoryImpl implements IMessageRepository {
             data: {
                 source: message.source,
                 type: message.type,
+                service: message.service,
                 payload: message.payload,
-                timestamp: message.timestamp
+                timestamp: message.timestamp,
+                idempotencyKey: message.idempotencyKey
             }
         });
     }
@@ -20,10 +22,10 @@ export class MessageRepositoryImpl implements IMessageRepository {
         });
     }
 
-    public async findByTimestamp(timestamp: Date): Promise<Message | null> {
+    public async findByIdempotencyKey(idempotencyKey: string): Promise<Message | null> {
         return await prismaClient.message.findUnique({
             where: {
-                timestamp: timestamp
+                idempotencyKey: idempotencyKey
             }
         });
     }

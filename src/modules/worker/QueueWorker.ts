@@ -1,12 +1,20 @@
 import { queueEventBus } from "../../infra/event/QueueEventBus";
 import { IQueueMessageRepository } from "../queue/domain/repository/IQueueMessageRepository";
 import { QueueMessageService } from "../queue/service/QueueMessageService";
+import { ServiceClient } from "./client/ServiceClient";
+import { SocketClient } from "@/infra/client/SocketClient";
 
 export class QueueWorker {
+    private readonly serviceClient: ServiceClient;
+
     constructor(
         private readonly queueMessageService : QueueMessageService,
         private readonly queueMessageRepository : IQueueMessageRepository
-    ) {}
+    ) {
+        const socketClient = new SocketClient();
+        this.serviceClient = new ServiceClient(socketClient, 'localhost', 4000);
+
+    }
 
     private isProcessing = false;
 
@@ -42,8 +50,15 @@ export class QueueWorker {
                     status: 'PROCESSING'
                 });
 
-                //TODO: Executar lógica de envio para o Service Client
-                await new Promise(resolve => setTimeout(resolve, 1000)); 
+                const payloadData = await this.queueMessageRepository.findMessagePayloadById(nextMessage.id);
+
+                if (!payloadData) {
+                    console.error(`[Worker] Payload não encontrado para a mensagem ID: ${nextMessage.id}`);
+                    await this.queueMessageService.internalRetryMessage(nextMessage);
+                    continue;
+                }
+
+                await this.serviceClient.send(nextMessage.id, payloadData.message.service, payloadData.message.payload);
 
                 await this.queueMessageService.updateQueueMessage({
                     ...nextMessage,
@@ -54,7 +69,9 @@ export class QueueWorker {
             }
         } catch (error) {
             console.error("[Worker] Erro ao processar mensagem:", error);
-            await this.queueMessageService.retryMessage(nextMessage!);
+            if (nextMessage) {
+                await this.queueMessageService.internalRetryMessage(nextMessage);
+            }
             
         } finally {
             this.isProcessing = false;

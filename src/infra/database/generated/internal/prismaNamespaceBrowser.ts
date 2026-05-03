@@ -75,8 +75,10 @@ export const MessageScalarFieldEnum = {
   id: 'id',
   source: 'source',
   type: 'type',
+  service: 'service',
   payload: 'payload',
-  timestamp: 'timestamp'
+  timestamp: 'timestamp',
+  idempotencyKey: 'idempotencyKey'
 } as const
 
 export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]

@@ -255,7 +255,7 @@ export type QueueMessageScalarWhereWithAggregatesInput = {
 export type QueueMessageCreateInput = {
   id?: string
   status?: $Enums.QueueStatus
-  retryCount: number
+  retryCount?: number
   message: Prisma.MessageCreateNestedOneWithoutQueueMessagesInput
 }
 
@@ -263,7 +263,7 @@ export type QueueMessageUncheckedCreateInput = {
   id?: string
   messageId: string
   status?: $Enums.QueueStatus
-  retryCount: number
+  retryCount?: number
 }
 
 export type QueueMessageUpdateInput = {
@@ -284,7 +284,7 @@ export type QueueMessageCreateManyInput = {
   id?: string
   messageId: string
   status?: $Enums.QueueStatus
-  retryCount: number
+  retryCount?: number
 }
 
 export type QueueMessageUpdateManyMutationInput = {
@@ -396,13 +396,13 @@ export type IntFieldUpdateOperationsInput = {
 export type QueueMessageCreateWithoutMessageInput = {
   id?: string
   status?: $Enums.QueueStatus
-  retryCount: number
+  retryCount?: number
 }
 
 export type QueueMessageUncheckedCreateWithoutMessageInput = {
   id?: string
   status?: $Enums.QueueStatus
-  retryCount: number
+  retryCount?: number
 }
 
 export type QueueMessageCreateOrConnectWithoutMessageInput = {
@@ -444,7 +444,7 @@ export type QueueMessageScalarWhereInput = {
 export type QueueMessageCreateManyMessageInput = {
   id?: string
   status?: $Enums.QueueStatus
-  retryCount: number
+  retryCount?: number
 }
 
 export type QueueMessageUpdateWithoutMessageInput = {

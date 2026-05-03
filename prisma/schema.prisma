@@ -24,8 +24,10 @@ model Message {
   id             String   @id @default(uuid()) @map("id")
   source         String
   type           String
+  service        String
   payload        String
-  timestamp      DateTime @default(now()) @unique
+  timestamp      DateTime @default(now())
+  idempotencyKey String  @unique
   queueMessages  QueueMessage[]
 }
 
@@ -33,7 +35,7 @@ model QueueMessage {
   id        String   @id @default(uuid()) @map("id")
   messageId String
   status    QueueStatus @default(PENDING)
-  retryCount Int
+  retryCount Int @default(0)
   message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
 }
  

@@ -1,6 +1,9 @@
 import { IQueueMessageRepository } from "../domain/repository/IQueueMessageRepository";
 import { QueueMessage } from "../domain/entity/QueueMessage";
 import { Socket } from "net";
+import { ResponseParser } from "@/infra/parser/ResponseParser";
+import { MessageBody } from "@/@types/contracts/MessageBody";
+import { ErrorHandler } from "@/infra/middleware/Error";
 
 export class QueueMessageService {
     constructor(
@@ -9,10 +12,9 @@ export class QueueMessageService {
 
     private static readonly MAX_RETRIES = 3;
     
-    public async saveQueueMessage(messageId: string, retryCount: number): Promise<void> {
+    public async saveQueueMessage(messageId: string): Promise<void> {
         await this.queueMessageRepository.saveMessage({
             messageId,
-            retryCount
         });
     }
 
@@ -20,23 +22,55 @@ export class QueueMessageService {
         await this.queueMessageRepository.updateMessage(queueMessage);
     }
 
-    public async retryMessage(queueMessage: QueueMessage, socket?: Socket): Promise<void> {
+    public async retryMessage(messageBody: MessageBody, socket: Socket): Promise<void> {
+        if (messageBody.payload.kind !== "QUEUE_MESSAGE_PAYLOAD") {
+            return ErrorHandler.handle("Payload inválido para publicação",socket);
+        }
+
+        if (!messageBody.payload.id) {
+            throw new Error("Payload deve conter um id para retry");
+        }
+
+        const queueMessage = await this.queueMessageRepository.findById(messageBody.payload.id);
+
+        if (!queueMessage) {
+            throw new Error(`Mensagem com id ${messageBody.payload.id} não encontrada`);
+        }
+
+        this.internalRetryMessage(queueMessage);
+
+        const payload = `id=${queueMessage.id},status=${queueMessage.status},retryCount=${queueMessage.retryCount}`;
+        
+        const response = ResponseParser.serialize({
+            method: 'POST',
+            path:'retry',
+            body: {
+                source: 'SERVICE_CLIENT',
+                type: 'RESPONSE',
+                payload,
+                timestamp: new Date().toISOString()
+            }
+        });
+        
+        socket.write(response);
+        socket.end();
+    }
+
+    public async internalRetryMessage(queueMessage: QueueMessage): Promise<void> {
         if(queueMessage.retryCount + 1 > QueueMessageService.MAX_RETRIES) {
             await this.queueMessageRepository.updateMessage({
                 ...queueMessage,
                 status: 'FAILED'
             });
+
+            throw new Error(`Mensagem ${queueMessage.id} excedeu o número máximo de tentativas.`);
+            
         } else {
             await this.queueMessageRepository.updateMessage({
                 ...queueMessage,
                 status: 'PENDING',
                 retryCount: queueMessage.retryCount + 1
             });
-        }
-
-        if (socket) {
-            socket.write(`Mensagem ${queueMessage.status === 'FAILED' ? 'falhou após múltiplas tentativas' : 'republicada para nova tentativa'}: ${queueMessage.messageId} - Tentativa: ${queueMessage.retryCount}`);
-            socket.end();
         }
     }
 }

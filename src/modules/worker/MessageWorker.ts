@@ -8,7 +8,7 @@ export class MessageWorker {
 
   public register(): void {
     queueEventBus.on("MESSAGE_CREATED", async ({ messageId }) => {
-      await this.queueMessageService.saveQueueMessage(messageId, 0);
+      await this.queueMessageService.saveQueueMessage(messageId);
 
       queueEventBus.emit("NEW_MESSAGE", {
         messageId,
