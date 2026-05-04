@@ -21,6 +21,6 @@ export class ServiceClient {
   private buildSendRequest(queueMessageId: string, service: string, apiPayload: string): string {
     const payload = `queueMessageId=${queueMessageId},service=${service},apiPayload=${apiPayload}`;
 
-    return `POST|process|MESSAGE_SERVICE;REQUEST;${payload};${new Date().toISOString()}`;
+    return `POST|redirect|MESSAGE_SERVICE;REQUEST;${payload};${new Date().toISOString()}`;
   }
 }
