@@ -10,7 +10,8 @@ export type Request = {
 
 enum Source {
   GATEWAY = "GATEWAY",
-  SERVICE_CLIENT = "SERVICE_CLIENT"
+  SERVICE_CLIENT = "SERVICE_CLIENT",
+  SERVICE = "SERVICE"
 }
 
 enum Type {
