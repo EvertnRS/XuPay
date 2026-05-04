@@ -37,7 +37,7 @@ export class QueueMessageService {
             throw new Error(`Mensagem com id ${messageBody.payload.id} não encontrada`);
         }
 
-        this.internalRetryMessage(queueMessage);
+        await this.internalRetryMessage(queueMessage);
 
         const payload = `id=${queueMessage.id},status=${queueMessage.status},retryCount=${queueMessage.retryCount}`;
         
